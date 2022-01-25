@@ -2,14 +2,14 @@ local M = {}
 
 M.set_terminal_keymaps = function()
   local opts = { noremap = true }
-  vim.api.nvim_buf_set_keymap(0, 't', '<C-q>', "<cmd>bdelete!<CR>", opts)
-  vim.api.nvim_buf_set_keymap(0, 'n', '<esc>', [[<C-W>w]], opts)
-  vim.api.nvim_buf_set_keymap(0, 't', 'jk', [[<C-\><C-n>]], opts)
-  vim.api.nvim_buf_set_keymap(0, 'n', 'jk', [[<C-W>w]], opts)
-  vim.api.nvim_buf_set_keymap(0, 't', '<C-h>', [[<C-\><C-n><C-W>h]], opts)
-  vim.api.nvim_buf_set_keymap(0, 't', '<C-j>', [[<C-\><C-n><C-W>j]], opts)
-  vim.api.nvim_buf_set_keymap(0, 't', '<C-k>', [[<C-\><C-n><C-W>k]], opts)
-  vim.api.nvim_buf_set_keymap(0, 't', '<C-l>', [[<C-\><C-n><C-W>l]], opts)
+  vim.api.nvim_buf_set_keymap(0, "t", "<C-q>", "<cmd>bdelete!<CR>", opts)
+  vim.api.nvim_buf_set_keymap(0, "n", "<esc>", [[<C-W>w]], opts)
+  vim.api.nvim_buf_set_keymap(0, "t", "jk", [[<C-\><C-n>]], opts)
+  vim.api.nvim_buf_set_keymap(0, "n", "jk", [[<C-W>w]], opts)
+  vim.api.nvim_buf_set_keymap(0, "t", "<C-h>", [[<C-\><C-n><C-W>h]], opts)
+  vim.api.nvim_buf_set_keymap(0, "t", "<C-j>", [[<C-\><C-n><C-W>j]], opts)
+  vim.api.nvim_buf_set_keymap(0, "t", "<C-k>", [[<C-\><C-n><C-W>k]], opts)
+  vim.api.nvim_buf_set_keymap(0, "t", "<C-l>", [[<C-\><C-n><C-W>l]], opts)
 end
 
 local function set_bufferline_keymaps()
@@ -72,10 +72,22 @@ M.config = function()
       name = "+Hop",
       c = { "<cmd>HopChar2<cr>", "Hop Char 2" },
       w = { "<cmd>HopWord<cr>", "Hop Word" },
-      f = { "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true, inclusive_jump = true })<cr>", "Forward" },
-      F = { "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true, inclusive_jump = true })<cr>", "Back" },
-      t = { "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true })<cr>", "Forward" },
-      T = { "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true })<cr>", "Back" },
+      f = {
+        "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true, inclusive_jump = true })<cr>",
+        "Forward",
+      },
+      F = {
+        "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true, inclusive_jump = true })<cr>",
+        "Back",
+      },
+      t = {
+        "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true })<cr>",
+        "Forward",
+      },
+      T = {
+        "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true })<cr>",
+        "Back",
+      },
     }
   end
 
@@ -85,7 +97,6 @@ M.config = function()
   lvim.keys.normal_mode["gd"] = "<cmd>lua vim.lsp.buf.definition()<cr>"
   lvim.keys.normal_mode["gD"] = "<cmd>lua vim.lsp.buf.declaration()<cr>"
   lvim.keys.normal_mode["K"] = "<cmd>lua vim.lsp.buf.hover()<cr>"
-
 
   -- WhichKey keybindings
   -- =========================================
@@ -100,7 +111,7 @@ M.config = function()
   lvim.builtin.which_key.mappings["u"] = {
     name = "Utils",
     z = { "<cmd>ZenMode<cr>", "Zen Mode" },
-    o = { "<cmd>SymbolsOutline<cr>", "Symbol Outline" }
+    o = { "<cmd>SymbolsOutline<cr>", "Symbol Outline" },
   }
   if lvim.user.fancy_diff.active then
     lvim.builtin.which_key.mappings["ud"] = { "<cmd>DiffviewOpen<cr>", "diffview: diff HEAD" }
@@ -134,17 +145,17 @@ M.config = function()
     -- f = { "<cmd>Telescope buffers<cr>", "Find Buffers" },
     b = { "<cmd>lua require('user.telescope').find_buffers()<cr>", "Find Buffers" },
     c = { "<cmd>BufferClose<cr>", "Close Current" },
-    o = { "<cmd>BufferCloseAllButCurrent<cr>", "Close Others", },
+    o = { "<cmd>BufferCloseAllButCurrent<cr>", "Close Others" },
     h = { "<cmd>BufferCloseBuffersLeft<cr>", "Close to Left" },
-    l = { "<cmd>BufferCloseBuffersRight<cr>", "Close to Right", },
+    l = { "<cmd>BufferCloseBuffersRight<cr>", "Close to Right" },
     j = { "<cmd>BufferMovePrevious<cr>", "Move Previous" },
-    k = { "<cmd>BufferMoveNext<cr>", "Move Next", },
+    k = { "<cmd>BufferMoveNext<cr>", "Move Next" },
     p = { "<cmd>BufferPick<cr>", "Buffer Pick" },
-    P = { "<cmd>BufferPin<cr>", "Pin", },
-    d = { "<cmd>BufferOrderByDirectory<cr>", "Sort by Directory", },
-    L = { "<cmd>BufferOrderByLanguage<cr>", "Sort by Language", },
-    B = { "<cmd>BufferOrderByBufferNumber<cr>", "Sort by Buffer Number", },
-    n = { "<cmd>BufferOrderByWindowNumber<cr>", "Sort by Window Number", },
+    P = { "<cmd>BufferPin<cr>", "Pin" },
+    d = { "<cmd>BufferOrderByDirectory<cr>", "Sort by Directory" },
+    L = { "<cmd>BufferOrderByLanguage<cr>", "Sort by Language" },
+    B = { "<cmd>BufferOrderByBufferNumber<cr>", "Sort by Buffer Number" },
+    n = { "<cmd>BufferOrderByWindowNumber<cr>", "Sort by Window Number" },
     m = { "<cmd>BufferWipeout<cr>", "Wipeout" },
 
     ["g"] = {
@@ -159,7 +170,7 @@ M.config = function()
       ["8"] = { "<cmd>BufferGoto 8<cr>", "BufferGoto 8" },
       ["9"] = { "<cmd>BufferGoto 9<cr>", "BufferGoto 9" },
       ["0"] = { "<cmd>BufferLast<cr>", "BufferLast" },
-    }
+    },
   }
 
   lvim.builtin.which_key.mappings["f"] = {
@@ -170,7 +181,7 @@ M.config = function()
     f = { "<cmd>Telescope find_files<cr>", "Find File" },
     g = { "<cmd>lua require('user.telescope').git_files()<cr>", "Git Files" },
     i = { "<cmd>lua require('user.telescope').installed_plugins()<cr>", "Installed Plugins" },
-    l = { "<cmd>Telescope resume<cr>", "Last Search", },
+    l = { "<cmd>Telescope resume<cr>", "Last Search" },
     p = { "<cmd>lua require('user.telescope').project_search()<cr>", "Project" },
     r = { "<cmd>lua require('telescope').extensions.frecency.frecency{}<cr>", "Frecency" },
     s = { "<cmd>lua require('user.telescope').git_status()<cr>", "Git Status" },
@@ -206,13 +217,13 @@ M.config = function()
 
     a = { "<cmd>lua require('lvim.core.telescope').code_actions()<cr>", "Code Action" },
     f = { "<cmd>lua vim.lsp.buf.formatting()<cr>", "Format" },
-    j = { "<cmd>lua vim.diagnostic.goto_next()<cr>", "Next Diagnostic", },
-    k = { "<cmd>lua vim.diagnostic.goto_prev()<cr>", "Prev Diagnostic", },
+    j = { "<cmd>lua vim.diagnostic.goto_next()<cr>", "Next Diagnostic" },
+    k = { "<cmd>lua vim.diagnostic.goto_prev()<cr>", "Prev Diagnostic" },
     l = { "<cmd>lua vim.lsp.codelens.run()<cr>", "CodeLens Action" },
     q = { "<cmd>lua vim.diagnostic.setloclist()<cr>", "Quickfix" },
     r = { "<cmd>lua vim.lsp.buf.rename()<cr>", "Rename" },
     s = { "<cmd>Telescope lsp_document_symbols<cr>", "Document Symbols" },
-    S = { "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>", "Workspace Symbols", },
+    S = { "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>", "Workspace Symbols" },
     w = { "<cmd>Telescope diagnostics bufnr=0 theme=get_ivy<cr>", "Buffer Diagnostics" },
     W = { "<cmd>Telescope diagnostics<cr>", "Diagnostics" },
 
@@ -233,8 +244,7 @@ M.config = function()
       i = { "<cmd>LspInfo<cr>", "Lsp Info" },
       I = { "<cmd>LspInstallInfo<cr>", "Install" },
       R = { "<cmd>LspRestart<cr>", "Restart" },
-    }
-
+    },
   }
   if lvim.user.fancy_rename then
     lvim.builtin.which_key.mappings["lr"] = { "<cmd>lua require('renamer').rename()<cr>", "Rename" }
@@ -255,7 +265,6 @@ M.config = function()
     lvim.builtin.which_key.mappings["de"] = { "<cmd>lua require('dapui').eval()<cr>", "Eval" }
     lvim.builtin.which_key.mappings["dU"] = { "<cmd>lua require('dapui').toggle()<cr>", "Toggle UI" }
   end
-
 end
 
 return M

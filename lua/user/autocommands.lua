@@ -60,7 +60,7 @@ augroup END
 
     -- Telescope
     -- { "user", "TelescopeFindPre", "setlocal number" },
-    { "user", "TelescopePreviewerLoaded", "setlocal number relativenumber wrap list" }
+    { "user", "TelescopePreviewerLoaded", "setlocal number relativenumber wrap list" },
   }
 end
 

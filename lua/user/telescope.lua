@@ -7,7 +7,7 @@ local actions = require "telescope.actions"
 
 function M._multiopen(prompt_bufnr, open_cmd)
   local picker = action_state.get_current_picker(prompt_bufnr)
-  local num_selections = table.getn(picker:get_multi_selection())
+  local num_selections = table.getn(picker:get_multi_selection()) -- luacheck: ignore
   local border_contents = picker.prompt_border.contents[1]
   if not (string.find(border_contents, "Find Files") or string.find(border_contents, "Git Files")) then
     actions.select_default(prompt_bufnr)
@@ -230,7 +230,6 @@ function M.find_updir()
   builtin.find_files(opts)
 end
 
-
 function M.installed_plugins()
   builtin.find_files {
     cwd = join_paths(os.getenv "LUNARVIM_RUNTIME_DIR", "site", "pack", "packer"),
@@ -360,7 +359,7 @@ function M.grep_cursor_string()
     vim.fn.setreg("a", save_previous)
     return vim.fn.substitute(selection, [[\n]], [[\\n]], "g")
   end
-  local opts = require"telescope.themes".get_ivy({
+  local opts = require("telescope.themes").get_ivy {
     default_text = visual_selection(),
     file_ignore_patterns = {
       "vendor/*",
@@ -372,7 +371,7 @@ function M.grep_cursor_string()
       "%.otf",
       "%.ttf",
     },
-  })
+  }
   require("telescope.builtin").live_grep(opts)
 end
 

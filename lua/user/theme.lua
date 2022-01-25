@@ -102,7 +102,6 @@ M.colors = {
       conflict = "#ff8800",
     },
   },
-
 }
 
 return M

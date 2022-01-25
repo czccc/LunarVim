@@ -197,14 +197,10 @@ local default_colors = {
   git = { change = "#ECBE7B", add = "#98be65", delete = "#ec5f67", conflict = "#bb7a61" },
 }
 
-local function get_dolors()
-
-end
-
 M.config = function()
-  local colors = default_colors
+  -- local colors = default_colors
   -- TODO: change to pcall
-  local colors = require("user.theme").colors[lvim.colorscheme]
+  local colors = require("user.theme").colors[lvim.colorscheme] or default_colors
 
   -- Color table for highlights
   local mode_color = {
@@ -285,7 +281,7 @@ M.config = function()
             vim.api.nvim_command(
               "hi! LualineModeInactive guifg=" .. mode_color[vim.fn.mode()] .. " guibg=" .. colors.bg_alt
             )
-            local selector = math.floor(_time.hour / 8) + 1
+            local selector = math.floor(_time.hour / 8) + 1 -- luacheck: ignore
             local icns = {
               "  ",
               "  ",

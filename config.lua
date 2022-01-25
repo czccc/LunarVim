@@ -1,4 +1,3 @@
-
 -- general
 lvim.leader = "space"
 lvim.format_on_save = false
@@ -21,7 +20,7 @@ lvim.user.fancy_diff = { active = true } -- enable/disable fancier git diff
 lvim.user.neoscroll = { active = true } -- smooth scrolling
 lvim.user.nonumber_unfocus = false -- diffrentiate between focused and non focused windows
 lvim.user.cursorline = { active = false } -- use a bit fancier cursorline
-lvim.user.hop_motion = { active = true }-- use hop motion providers
+lvim.user.hop_motion = { active = true } -- use hop motion providers
 lvim.user.sidebar = { active = true } -- enable/disable sidebar
 
 -- Builtin
@@ -42,12 +41,8 @@ end
 
 -- Language Specific
 -- =========================================
-vim.list_extend(
-  lvim.lsp.override,
-  { "rust_analyzer", "tsserver", "pyright", "sumneko_lua", "jsonls" }
-)
+vim.list_extend(lvim.lsp.override, { "rust_analyzer", "tsserver", "pyright", "sumneko_lua", "jsonls" })
 require("user.null_ls").config()
-
 
 -- Additional Plugins
 -- =========================================
@@ -61,4 +56,3 @@ require("user.autocommands").config()
 -- =========================================
 require("user.keybindings").config()
 -- require("user.whichkey").config()
-

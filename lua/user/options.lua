@@ -83,7 +83,6 @@ M.config = function()
     -- version control
     ".git,.svn",
   }
-
 end
 
 return M

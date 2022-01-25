@@ -3,9 +3,9 @@ local M = {}
 M._add_desc = function(wk, keymap, desc, mode, group)
   -- print("setting " .. keymap .. " " .. desc)
   if group then
-    wk.register({[keymap] = { name = desc }}, { mode = mode })
+    wk.register({ [keymap] = { name = desc } }, { mode = mode })
   else
-    wk.register({[keymap] = { desc }}, { mode = mode })
+    wk.register({ [keymap] = { desc } }, { mode = mode })
   end
 end
 

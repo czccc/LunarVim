@@ -37,7 +37,7 @@ M.config = function()
   end
 
   ---@diagnostic disable-next-line: unused-function, unused-local
-  local function sort_by_mtime(a, b)
+  local function sort_by_mtime(a, b) -- luacheck: ignore
     local astat = vim.loop.fs_stat(a.path)
     local bstat = vim.loop.fs_stat(b.path)
     local mod_a = astat and astat.mtime.sec or 0

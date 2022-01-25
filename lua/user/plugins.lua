@@ -24,9 +24,9 @@ M.config = function()
     {
       "nvim-telescope/telescope-frecency.nvim",
       config = function()
-        require"telescope".load_extension("frecency")
+        require("telescope").load_extension "frecency"
       end,
-      requires = {"tami5/sqlite.lua"}
+      requires = { "tami5/sqlite.lua" },
     },
     {
       "goolord/alpha-nvim",
@@ -38,7 +38,7 @@ M.config = function()
     {
       "karb94/neoscroll.nvim",
       config = function()
-        require("neoscroll").setup { easing_function = "quadratic", }
+        require("neoscroll").setup { easing_function = "quadratic" }
       end,
       event = "BufRead",
       disable = not lvim.user.neoscroll.active,
@@ -52,7 +52,7 @@ M.config = function()
     {
       "norcalli/nvim-colorizer.lua",
       config = function()
-        require("colorizer").setup({ "*" }, { css = true, })
+        require("colorizer").setup({ "*" }, { css = true })
       end,
       event = { "BufRead" },
     },

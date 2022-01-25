@@ -2,7 +2,7 @@ local M = {}
 
 M.config = function()
   local kind = require "user.lsp_kind"
-  
+
   -- Notify
   -- =========================================
   lvim.builtin.notify.active = true
@@ -278,19 +278,18 @@ M.config = function()
   lvim.builtin.terminal.active = true
   lvim.builtin.terminal.open_mapping = [[<C-\>]]
   lvim.builtin.terminal.execs = {
-      { "zsh", "<leader>tt", "Float", "float" },
-      { "zsh", "<leader>tt", "Horizontal", "horizontal" },
-      { "zsh", "<leader>tt", "Vertical", "vertical" },
-      { "lazygit", "<leader>tg", "LazyGit", "float" },
-      { "gitui", "<leader>tG", "Git UI", "float" },
-      { "python", "<leader>tp", "Python", "float" },
-      { "htop", "<leader>tj", "htop", "float" },
-      { "ncdu", "<leader>tn", "ncdu", "float"}
+    { "zsh", "<leader>tt", "Float", "float" },
+    { "zsh", "<leader>tt", "Horizontal", "horizontal" },
+    { "zsh", "<leader>tt", "Vertical", "vertical" },
+    { "lazygit", "<leader>tg", "LazyGit", "float" },
+    { "gitui", "<leader>tG", "Git UI", "float" },
+    { "python", "<leader>tp", "Python", "float" },
+    { "htop", "<leader>tj", "htop", "float" },
+    { "ncdu", "<leader>tn", "ncdu", "float" },
   }
 
   -- WhichKey
   lvim.builtin.which_key.on_config_done = require("user.whichkey").config
-
 end
 
 function M.rename(curr, win)
