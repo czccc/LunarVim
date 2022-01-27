@@ -13,7 +13,7 @@ M.config = function()
     lvim.builtin.bufferline.active = false
   end
 
-  vim.g.indent_blankline_char = '│'
+  vim.g.indent_blankline_char = "│"
   -- CMP
   -- =========================================
   lvim.builtin.cmp.sources = {
