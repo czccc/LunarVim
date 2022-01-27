@@ -48,6 +48,7 @@ M.config = function()
   local groups = require "bufferline.groups"
   local List = require "plenary.collections.py_list"
 
+  ---@diagnostic disable-next-line: redundant-parameter
   require("bufferline").setup {
     options = {
       -- sort_by = sort_by_mtime,

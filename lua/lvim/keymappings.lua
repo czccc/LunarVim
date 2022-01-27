@@ -130,6 +130,7 @@ end
 
 -- Unsets all keybindings defined in keymaps
 -- @param keymaps The table of key mappings containing a list per mode (normal_mode, insert_mode, ..)
+---@diagnostic disable-next-line: duplicate-set-field
 function M.clear(keymaps)
   local default = M.get_defaults()
   for mode, mappings in pairs(keymaps) do
@@ -145,6 +146,7 @@ end
 
 -- Unsets all keybindings defined in keymaps
 -- @param keymaps The table of key mappings containing a list per mode (normal_mode, insert_mode, ..)
+---@diagnostic disable-next-line: duplicate-set-field
 function M.clear(keymaps)
   local default = M.get_defaults()
   for mode, mappings in pairs(keymaps) do

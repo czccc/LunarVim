@@ -13,6 +13,7 @@ M.config = function()
     lvim.builtin.bufferline.active = false
   end
 
+  vim.g.indent_blankline_char = '│'
   -- CMP
   -- =========================================
   lvim.builtin.cmp.sources = {
@@ -82,7 +83,7 @@ M.config = function()
 
   -- LSP
   -- =========================================
-  lvim.lsp.automatic_servers_installation = false
+  lvim.lsp.automatic_servers_installation = true
   lvim.lsp.float.focusable = true
   lvim.lsp.diagnostics.update_in_insert = false
   lvim.lsp.diagnostics.float.border = "rounded"
@@ -279,8 +280,8 @@ M.config = function()
   lvim.builtin.terminal.open_mapping = [[<C-\>]]
   lvim.builtin.terminal.execs = {
     { "zsh", "<leader>tt", "Float", "float" },
-    { "zsh", "<leader>tt", "Horizontal", "horizontal" },
-    { "zsh", "<leader>tt", "Vertical", "vertical" },
+    { "zsh", "<leader>th", "Horizontal", "horizontal" },
+    { "zsh", "<leader>tv", "Vertical", "vertical" },
     { "lazygit", "<leader>tg", "LazyGit", "float" },
     { "gitui", "<leader>tG", "Git UI", "float" },
     { "python", "<leader>tp", "Python", "float" },

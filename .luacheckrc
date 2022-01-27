@@ -1,3 +1,4 @@
+---@diagnostic disable: undefined-global, lowercase-global
 -- vim: ft=lua tw=80
 
 stds.nvim = {

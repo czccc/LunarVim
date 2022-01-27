@@ -65,6 +65,7 @@ M.make_code_action = function(opts)
           local client = vim.lsp.get_client_by_id(params.client_id)
           local spawn_opts = {
             cwd = client and client.config.root_dir or vim.fn.getcwd(),
+            ---@diagnostic disable-next-line: undefined-global
             input = content, -- luacheck: ignore
             handler = handler,
             timeout = timeout,

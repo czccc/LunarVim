@@ -95,7 +95,7 @@ M.config = function()
       rocks = { "luarocks-fetch-gitrec", "pcre2" },
       requires = { "romgrk/fzy-lua-native" },
       config = function()
-        vim.cmd(string.format("source %s", "~/.config/lvim/vimscript/wilder.vim"))
+        vim.cmd(string.format("source %s", get_config_dir() .. "/vimscript/wilder.vim"))
       end,
       run = ":UpdateRemotePlugins",
       disable = not lvim.user.fancy_wild_menu.active,

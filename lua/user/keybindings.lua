@@ -103,9 +103,9 @@ M.config = function()
   -- Terminal
   lvim.builtin.which_key.mappings["t"] = {
     name = "Terminal",
-    t = { "ToggleTerm direction=float", "Float" },
-    h = { "ToggleTerm direction=horizontal size=10", "Horizontal" },
-    v = { "ToggleTerm direction=vertical size=80", "Vertical" },
+    -- t = { "ToggleTerm direction=float", "Float" },
+    -- h = { "ToggleTerm direction=horizontal size=10", "Horizontal" },
+    -- v = { "ToggleTerm direction=vertical size=80", "Vertical" },
   }
   -- M.set_async_tasks_keymaps()
   lvim.builtin.which_key.mappings["u"] = {

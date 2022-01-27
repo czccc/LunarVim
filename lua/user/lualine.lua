@@ -281,6 +281,7 @@ M.config = function()
             vim.api.nvim_command(
               "hi! LualineModeInactive guifg=" .. mode_color[vim.fn.mode()] .. " guibg=" .. colors.bg_alt
             )
+            ---@diagnostic disable-next-line: undefined-global
             local selector = math.floor(_time.hour / 8) + 1 -- luacheck: ignore
             local icns = {
               "  ",
