@@ -12,32 +12,6 @@ M.set_terminal_keymaps = function()
   vim.api.nvim_buf_set_keymap(0, "t", "<C-l>", [[<C-\><C-n><C-W>l]], opts)
 end
 
-local function set_bufferline_keymaps()
-  lvim.keys.normal_mode["<S-x>"] = ":bdelete!<CR>"
-  lvim.keys.normal_mode["<S-l>"] = "<Cmd>BufferLineCycleNext<CR>"
-  lvim.keys.normal_mode["<S-h>"] = "<Cmd>BufferLineCyclePrev<CR>"
-  lvim.keys.normal_mode["<Tab>"] = "<Cmd>BufferLineCycleNext<CR>"
-  lvim.keys.normal_mode["<S-Tab>"] = "<Cmd>BufferLineCyclePrev<CR>"
-  lvim.builtin.which_key.mappings["c"] = { "<CMD>bdelete!<CR>", "Close Buffer" }
-  lvim.builtin.which_key.mappings.b = {
-    name = "Buffers",
-    ["1"] = { "<Cmd>BufferLineGoToBuffer 1<CR>", "goto 1" },
-    ["2"] = { "<Cmd>BufferLineGoToBuffer 2<CR>", "goto 2" },
-    ["3"] = { "<Cmd>BufferLineGoToBuffer 3<CR>", "goto 3" },
-    ["4"] = { "<Cmd>BufferLineGoToBuffer 4<CR>", "goto 4" },
-    ["5"] = { "<Cmd>BufferLineGoToBuffer 5<CR>", "goto 5" },
-    ["6"] = { "<Cmd>BufferLineGoToBuffer 6<CR>", "goto 6" },
-    ["7"] = { "<Cmd>BufferLineGoToBuffer 7<CR>", "goto 7" },
-    ["8"] = { "<Cmd>BufferLineGoToBuffer 8<CR>", "goto 8" },
-    ["9"] = { "<Cmd>BufferLineGoToBuffer 9<CR>", "goto 9" },
-    c = { "<Cmd>BufferLinePickClose<CR>", "delete buffer" },
-    p = { "<Cmd>BufferLinePick<CR>", "pick buffer" },
-    t = { "<Cmd>BufferLineGroupToggle docs<CR>", "toggle groups" },
-    f = { "<cmd>Telescope buffers<cr>", "Find" },
-    b = { "<cmd>b#<cr>", "Previous" },
-  }
-end
-
 M.config = function()
   -- Additional keybindings
   -- =========================================
@@ -58,14 +32,11 @@ M.config = function()
   lvim.keys.visual_mode["p"] = [["_dP]]
   lvim.keys.command_mode["w!!"] = "execute 'silent! write !sudo tee % >/dev/null' <bar> edit!"
 
-  lvim.keys.normal_mode["<S-x>"] = ":BufferClose<CR>"
-  lvim.keys.normal_mode["<TAB>"] = ":BufferNext<CR>"
-  lvim.keys.normal_mode["<S-TAB>"] = ":BufferPrevious<CR>"
-  lvim.keys.normal_mode["<A-<>"] = ":BufferMovePrevious<CR>"
-  lvim.keys.normal_mode["<A->>"] = ":BufferMoveNext<CR>"
-  if lvim.user.fancy_bufferline.active then
-    set_bufferline_keymaps()
-  end
+  lvim.keys.normal_mode["<S-x>"] = ":BufferKill<CR>"
+  lvim.keys.normal_mode["<TAB>"] = ":BufferLineCycleNext<CR>"
+  lvim.keys.normal_mode["<S-TAB>"] = ":BufferLineCyclePrev<CR>"
+  lvim.keys.normal_mode["<A-<>"] = ":BufferLineMovePrev<CR>"
+  lvim.keys.normal_mode["<A->>"] = ":BufferLineMoveNext<CR>"
 
   if lvim.user.hop_motion.active then
     lvim.builtin.which_key.mappings["j"] = {
@@ -107,7 +78,6 @@ M.config = function()
     -- h = { "ToggleTerm direction=horizontal size=10", "Horizontal" },
     -- v = { "ToggleTerm direction=vertical size=80", "Vertical" },
   }
-  -- M.set_async_tasks_keymaps()
   lvim.builtin.which_key.mappings["u"] = {
     name = "Utils",
     z = { "<cmd>ZenMode<cr>", "Zen Mode" },
@@ -139,37 +109,32 @@ M.config = function()
     w = { "<cmd>lua require('spectre').open_visual({select_word=true})<cr>", "Replace Word" },
   }
 
-  lvim.builtin.which_key.mappings["c"] = { "<cmd>BufferClose<CR>", "Close Buffer" }
+  lvim.builtin.which_key.mappings["c"] = { "<cmd>BufferKill<CR>", "Close Buffer" }
   lvim.builtin.which_key.mappings["b"] = {
     name = "Buffers",
     -- f = { "<cmd>Telescope buffers<cr>", "Find Buffers" },
     b = { "<cmd>lua require('user.telescope').find_buffers()<cr>", "Find Buffers" },
-    c = { "<cmd>BufferClose<cr>", "Close Current" },
-    o = { "<cmd>BufferCloseAllButCurrent<cr>", "Close Others" },
-    h = { "<cmd>BufferCloseBuffersLeft<cr>", "Close to Left" },
-    l = { "<cmd>BufferCloseBuffersRight<cr>", "Close to Right" },
-    j = { "<cmd>BufferMovePrevious<cr>", "Move Previous" },
-    k = { "<cmd>BufferMoveNext<cr>", "Move Next" },
-    p = { "<cmd>BufferPick<cr>", "Buffer Pick" },
-    P = { "<cmd>BufferPin<cr>", "Pin" },
-    d = { "<cmd>BufferOrderByDirectory<cr>", "Sort by Directory" },
-    L = { "<cmd>BufferOrderByLanguage<cr>", "Sort by Language" },
-    B = { "<cmd>BufferOrderByBufferNumber<cr>", "Sort by Buffer Number" },
-    n = { "<cmd>BufferOrderByWindowNumber<cr>", "Sort by Window Number" },
-    m = { "<cmd>BufferWipeout<cr>", "Wipeout" },
+    c = { "<cmd>BufferKill<cr>", "Close Current" },
+    h = { "<cmd>BufferLineCloseLeft<cr>", "Close to Left" },
+    l = { "<cmd>BufferLineCloseRight<cr>", "Close to Right" },
+    j = { "<cmd>BufferLineMovePrev<cr>", "Move Previous" },
+    k = { "<cmd>BufferLineMoveNext<cr>", "Move Next" },
+    p = { "<cmd>BufferLinePick<cr>", "Buffer Pick" },
+    d = { "<cmd>BufferLineSortByDirectory<cr>", "Sort by Directory" },
+    L = { "<cmd>BufferLineSortByExtension<cr>", "Sort by Extension" },
+    n = { "<cmd>BufferLineSortByTabs<cr>", "Sort by Tabs" },
 
     ["g"] = {
-      name = "BufferGoto",
-      ["1"] = { "<cmd>BufferGoto 1<cr>", "BufferGoto 1" },
-      ["2"] = { "<cmd>BufferGoto 2<cr>", "BufferGoto 2" },
-      ["3"] = { "<cmd>BufferGoto 3<cr>", "BufferGoto 3" },
-      ["4"] = { "<cmd>BufferGoto 4<cr>", "BufferGoto 4" },
-      ["5"] = { "<cmd>BufferGoto 5<cr>", "BufferGoto 5" },
-      ["6"] = { "<cmd>BufferGoto 6<cr>", "BufferGoto 6" },
-      ["7"] = { "<cmd>BufferGoto 7<cr>", "BufferGoto 7" },
-      ["8"] = { "<cmd>BufferGoto 8<cr>", "BufferGoto 8" },
-      ["9"] = { "<cmd>BufferGoto 9<cr>", "BufferGoto 9" },
-      ["0"] = { "<cmd>BufferLast<cr>", "BufferLast" },
+      name = "Buffer Goto",
+      ["1"] = { "<cmd>BufferLineGoToBuffer 1<cr>", "BufferGoto 1" },
+      ["2"] = { "<cmd>BufferLineGoToBuffer 2<cr>", "BufferGoto 2" },
+      ["3"] = { "<cmd>BufferLineGoToBuffer 3<cr>", "BufferGoto 3" },
+      ["4"] = { "<cmd>BufferLineGoToBuffer 4<cr>", "BufferGoto 4" },
+      ["5"] = { "<cmd>BufferLineGoToBuffer 5<cr>", "BufferGoto 5" },
+      ["6"] = { "<cmd>BufferLineGoToBuffer 6<cr>", "BufferGoto 6" },
+      ["7"] = { "<cmd>BufferLineGoToBuffer 7<cr>", "BufferGoto 7" },
+      ["8"] = { "<cmd>BufferLineGoToBuffer 8<cr>", "BufferGoto 8" },
+      ["9"] = { "<cmd>BufferLineGoToBuffer 9<cr>", "BufferGoto 9" },
     },
   }
 

@@ -82,14 +82,6 @@ M.config = function()
       cmd = { "ZenMode" },
     },
     {
-      "akinsho/bufferline.nvim",
-      config = function()
-        require("user.bufferline").config()
-      end,
-      requires = "nvim-web-devicons",
-      disable = not lvim.user.fancy_bufferline.active,
-    },
-    {
       "gelguy/wilder.nvim",
       -- event = { "CursorHold", "CmdlineEnter" },
       rocks = { "luarocks-fetch-gitrec", "pcre2" },

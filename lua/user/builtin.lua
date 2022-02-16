@@ -9,9 +9,16 @@ M.config = function()
 
   -- Barbar or Bufferline
   -- =========================================
-  if lvim.user.fancy_bufferline.active then
-    lvim.builtin.bufferline.active = false
-  end
+  -- if lvim.user.fancy_bufferline.active then
+  --   lvim.builtin.bufferline.active = false
+  -- end
+  lvim.builtin.bufferline.options.close_command = "BufferKill"
+  lvim.builtin.bufferline.options.always_show_bufferline = true
+  lvim.builtin.bufferline.highlights.buffer_selected = {
+    gui = "bold",
+    -- guibg = "black",
+  }
+
 
   vim.g.indent_blankline_char = "│"
   -- CMP
@@ -110,6 +117,7 @@ M.config = function()
   vim.g.nvim_tree_indent_markers = 1
   vim.g.nvim_tree_group_empty = 1
   lvim.builtin.nvimtree.show_icons.git = 0
+  lvim.builtin.nvimtree.setup.hijack_cursor = true
   lvim.builtin.nvimtree.setup.auto_close = true
   lvim.builtin.nvimtree.setup.diagnostics = {
     enable = true,
