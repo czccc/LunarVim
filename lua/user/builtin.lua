@@ -19,7 +19,6 @@ M.config = function()
     -- guibg = "black",
   }
 
-
   vim.g.indent_blankline_char = "│"
   -- CMP
   -- =========================================
