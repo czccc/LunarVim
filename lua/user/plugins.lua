@@ -225,6 +225,18 @@ M.config = function()
       end,
       ft = { "rust", "rs" },
     },
+    {
+      "AckslD/nvim-neoclip.lua",
+      requires = {
+        {'tami5/sqlite.lua', module = 'sqlite'},
+        -- you'll need at least one of these
+        {'nvim-telescope/telescope.nvim'},
+        -- {'ibhagwan/fzf-lua'},
+      },
+      config = function()
+        require('user.neoclip').config()
+      end,
+    }
   }
 end
 
