@@ -88,18 +88,26 @@ M.config = function()
   end
   if lvim.user.sidebar.active then
     lvim.keys.normal_mode["E"] = ":SidebarNvimToggle<cr>"
-    lvim.builtin.which_key.mappings["us"] = { "<cmd>SidebarNvimToggle<CR>", "Sidebar" }
+    lvim.builtin.which_key.mappings["uE"] = { "<cmd>SidebarNvimToggle<CR>", "Sidebar" }
   end
   lvim.builtin.which_key.mappings[";"] = nil
   if lvim.user.fancy_dashboard.active then
     lvim.builtin.which_key.mappings["ua"] = { "<cmd>Alpha<CR>", "Dashboard" }
   end
-  if lvim.user.persistence then
-    lvim.builtin.which_key.mappings["uq"] = {
-      name = "+Quit",
+  if lvim.user.persistence.active then
+    lvim.builtin.which_key.mappings["uS"] = {
+      name = "+Session",
       d = { "<cmd>lua require('persistence').stop()<cr>", "Quit without saving session" },
       l = { "<cmd>lua require('persistence').load(last=true)<cr>", "Restore last session" },
       s = { "<cmd>lua require('persistence').load()<cr>", "Restore for current dir" },
+    }
+  end
+  if lvim.user.auto_session.active then
+    lvim.builtin.which_key.mappings["uS"] = {
+      name = "+Session",
+      s = { "<cmd>SaveSession<cr>", "SaveSession" },
+      r = { "<cmd>RestoreSession<cr>", "RestoreSession" },
+      d = { "<cmd>DeleteSession<cr>", "DeleteSession" },
     }
   end
   lvim.builtin.which_key.mappings["uR"] = {

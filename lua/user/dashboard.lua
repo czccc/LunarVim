@@ -1,5 +1,13 @@
 local M = {}
 
+-- local function resume()
+--   local status_ok, persistence = pcall(require, "persistence")
+--   if not status_ok then
+--     return
+--   end
+--   persistence.load()
+-- end
+
 M.config = function()
   local present, alpha = pcall(require, "alpha")
   if not present then

@@ -1,4 +1,5 @@
 local M = {}
+-- local Log = require "lvim.core.log"
 
 M.config = function()
   local kind = require "user.lsp_kind"
@@ -12,7 +13,10 @@ M.config = function()
   -- if lvim.user.fancy_bufferline.active then
   --   lvim.builtin.bufferline.active = false
   -- end
-  lvim.builtin.bufferline.options.close_command = "BufferKill"
+  -- lvim.builtin.bufferline.options.close_command = "BufferKill"
+  lvim.builtin.bufferline.options.close_command = function(bufnum)
+    require("lvim.core.bufferline").buf_kill("bd", bufnum)
+  end
   lvim.builtin.bufferline.options.always_show_bufferline = true
   lvim.builtin.bufferline.highlights.buffer_selected = {
     gui = "bold",
@@ -128,11 +132,30 @@ M.config = function()
     },
   }
   lvim.builtin.nvimtree.icons = kind.nvim_tree_icons
+  lvim.builtin.which_key.mappings["e"] = { "<cmd>NvimTreeFocus<CR>", "Explorer" }
+  lvim.builtin.which_key.mappings["E"] = { "<cmd>NvimTreeToggle<CR>", "Explorer" }
+  lvim.builtin.nvimtree.on_config_done = function(nvim_tree_config)
+    local tree_cb = nvim_tree_config.nvim_tree_callback
+    lvim.builtin.nvimtree.setup.view.mappings.list = {
+      { key = "<Tab>", cb = "<C-w>l" },
+      { key = { "l", "<CR>", "o" }, cb = tree_cb "edit" },
+      { key = "h", cb = tree_cb "close_node" },
+      { key = "v", cb = tree_cb "vsplit" },
+      { key = "C", cb = tree_cb "cd" },
+      { key = "gtf", cb = "<cmd>lua require'lvim.core.nvimtree'.start_telescope('find_files')<cr>" },
+      { key = "gtg", cb = "<cmd>lua require'lvim.core.nvimtree'.start_telescope('live_grep')<cr>" },
+    }
+    -- disable auto update cwd
+    lvim.builtin.nvimtree.respect_buf_cwd = 0
+    lvim.builtin.nvimtree.setup.update_cwd = true
+  end
 
   -- Project
   -- =========================================
-  lvim.builtin.project.active = true
+  lvim.builtin.project.active = false
+  lvim.builtin.project.manual_mode = true
   lvim.builtin.project.detection_methods = { "lsp", "pattern" }
+  lvim.builtin.project.patterns = { ".git", "_darcs", ".hg", ".bzr", ".svn", "package.json" }
 
   -- Treesitter
   -- =========================================
@@ -211,6 +234,9 @@ M.config = function()
   -- =========================================
   -- lvim.builtin.telescope.defaults.path_display = { "smart", "absolute", "truncate" }
   lvim.builtin.telescope.defaults.path_display = { shorten = 10 }
+  lvim.builtin.telescope.defaults.pickers.find_files = {
+    find_command = { "fd", "--type=file", "--hidden", "--smart-case", "--strip-cwd-prefix" },
+  }
   lvim.builtin.telescope.defaults.winblend = 6
   lvim.builtin.telescope.defaults.file_ignore_patterns = {
     "vendor/*",

@@ -244,6 +244,10 @@ function M.project_search()
   }
 end
 
+function M.project_oldfiles()
+  builtin.oldfiles {}
+end
+
 function M.find_buffers()
   local opts = themes.get_dropdown {
     winblend = 10,

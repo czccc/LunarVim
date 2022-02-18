@@ -84,7 +84,7 @@ M.config = function()
     ".git,.svn",
   }
   vim.opt.viewoptions = "folds,cursor,curdir,slash,unix"
-  vim.opt.sessionoptions = "blank,buffers,curdir,folds,help,localoptions,options,tabpages,winsize,winpos,globals"
+  vim.opt.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,globals"
 end
 
 return M

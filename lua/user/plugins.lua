@@ -25,6 +25,9 @@ M.config = function()
       "nvim-telescope/telescope-frecency.nvim",
       config = function()
         require("telescope").load_extension "frecency"
+        lvim.builtin.telescope.extensions["frecency"] = {
+          show_scores = true,
+        }
       end,
       requires = { "tami5/sqlite.lua" },
     },
@@ -154,18 +157,18 @@ M.config = function()
       end,
       disable = lvim.user.hop_motion.acitve,
     },
-    {
-      "folke/persistence.nvim",
-      event = "BufReadPre",
-      module = "persistence",
-      config = function()
-        require("persistence").setup {
-          dir = vim.fn.expand(get_cache_dir() .. "/sessions/"), -- directory where session files are saved
-          options = { "buffers", "curdir", "tabpages", "winsize" }, -- sessionoptions used for saving
-        }
-      end,
-      disable = not lvim.user.persistence.active,
-    },
+    -- {
+    --   "folke/persistence.nvim",
+    --   event = "BufReadPre",
+    --   module = "persistence",
+    --   config = function()
+    --     require("persistence").setup {
+    --       dir = vim.fn.expand(get_cache_dir() .. "/sessions/"), -- directory where session files are saved
+    --       options = { "buffers", "curdir", "tabpages", "winsize" }, -- sessionoptions used for saving
+    --     }
+    --   end,
+    --   disable = not lvim.user.persistence.active,
+    -- },
     {
       "windwp/nvim-spectre",
       event = "BufRead",
@@ -228,15 +231,22 @@ M.config = function()
     {
       "AckslD/nvim-neoclip.lua",
       requires = {
-        {'tami5/sqlite.lua', module = 'sqlite'},
+        { "tami5/sqlite.lua", module = "sqlite" },
         -- you'll need at least one of these
-        {'nvim-telescope/telescope.nvim'},
+        { "nvim-telescope/telescope.nvim" },
         -- {'ibhagwan/fzf-lua'},
       },
       config = function()
-        require('user.neoclip').config()
+        require("user.neoclip").config()
       end,
-    }
+    },
+    {
+      "rmagatti/auto-session",
+      config = function()
+        require("user.auto_session").config()
+      end,
+      disable = not lvim.user.auto_session.active,
+    },
   }
 end
 

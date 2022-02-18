@@ -1,6 +1,7 @@
 -- general
 lvim.leader = "space"
-lvim.format_on_save = false
+-- lvim.format_on_save = false
+lvim.format_on_save = true
 lvim.colorscheme = "onedarker"
 require("user.options").config()
 
@@ -10,7 +11,8 @@ vim.lsp.set_log_level "warn"
 -- user plugins
 lvim.user = {}
 lvim.user.lastplace = { active = true } -- change to false if you are jumping to future
-lvim.user.persistence = { active = true } -- change to false if you don't want persistence
+lvim.user.persistence = { active = false } -- change to false if you don't want persistence
+lvim.user.auto_session = { active = true }
 lvim.user.fancy_statusline = { active = true } -- enable/disable fancy statusline
 lvim.user.fancy_bufferline = { active = false } -- enable/disable fancy bufferline
 lvim.user.fancy_dashboard = { active = true } -- enable/disable fancy dashboard
