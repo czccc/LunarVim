@@ -12,7 +12,7 @@ M.config = function()
     history = 50,
     enable_persistent_history = true,
     db_path = vim.fn.stdpath "data" .. "/neoclip.sqlite3",
-    default_register = {'"', '+', '*'},
+    default_register = { '"', "+", "*" },
     keys = {
       telescope = {
         i = { select = "<c-p>", paste = "<CR>", paste_behind = "<c-k>" },
