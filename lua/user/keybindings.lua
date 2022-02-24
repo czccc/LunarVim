@@ -30,7 +30,7 @@ M.config = function()
   lvim.keys.normal_mode["D"] = "d$"
   lvim.keys.normal_mode["Y"] = "y$"
   lvim.keys.visual_mode["p"] = [["_dP]]
-  lvim.keys.command_mode["w!!"] = "execute 'silent! write !sudo tee % >/dev/null' <bar> edit!"
+  -- lvim.keys.command_mode["w!!"] = "execute 'silent! write !sudo tee % >/dev/null' <bar> edit!"
 
   lvim.keys.normal_mode["<S-x>"] = ":BufferKill<CR>"
   lvim.keys.normal_mode["<TAB>"] = ":BufferLineCycleNext<CR>"
@@ -63,21 +63,27 @@ M.config = function()
   end
 
   -- LSP
-  lvim.keys.normal_mode["g["] = "<cmd>lua vim.diagnostic.goto_next()<cr>"
-  lvim.keys.normal_mode["g]"] = "<cmd>lua vim.diagnostic.goto_prev()<cr>"
-  lvim.keys.normal_mode["gd"] = "<cmd>lua vim.lsp.buf.definition()<cr>"
-  lvim.keys.normal_mode["gD"] = "<cmd>lua vim.lsp.buf.declaration()<cr>"
-  lvim.keys.normal_mode["K"] = "<cmd>lua vim.lsp.buf.hover()<cr>"
+  lvim.lsp.buffer_mappings = {
+    normal_mode = {
+      ["K"] = { "<cmd>lua vim.lsp.buf.hover()<CR>", "Show hover" },
+      ["g["] = { "<cmd>lua vim.diagnostic.goto_next()<cr>", "Diagnostic Next" },
+      ["g]"] = { "<cmd>lua vim.diagnostic.goto_prev()<cr>", "Diagnostic Prev" },
+      ["ga"] = { "<cmd>lua require('user.telescope').code_actions()<CR>", "Code Action" },
+      ["gd"] = { "<cmd>lua require('user.telescope').lsp_definitions()<CR>", "Goto Definition" },
+      ["gD"] = { "<cmd>lua vim.lsp.buf.declaration()<CR>", "Goto declaration" },
+      ["gr"] = { "<cmd>lua require('user.telescope').lsp_references()<CR>", "Goto references" },
+      ["gI"] = { "<cmd>lua require('user.telescope').lsp_implementations()<CR>", "Goto Implementation" },
+      ["gs"] = { "<cmd>lua vim.lsp.buf.signature_help()<CR>", "show signature help" },
+      ["gt"] = { "<cmd>lua vim.lsp.buf.type_definition()<CR>", "Goto Type Definition" },
+      ["gp"] = { "<cmd>lua require'lvim.lsp.peek'.Peek('definition')<CR>", "Peek definition" },
+      ["gl"] = { "<cmd>lua require'lvim.lsp.handlers'.show_line_diagnostics()<CR>", "Line diagnostics" },
+    },
+    insert_mode = {},
+    visual_mode = {},
+  }
 
   -- WhichKey keybindings
   -- =========================================
-  -- Terminal
-  lvim.builtin.which_key.mappings["t"] = {
-    name = "Terminal",
-    -- t = { "ToggleTerm direction=float", "Float" },
-    -- h = { "ToggleTerm direction=horizontal size=10", "Horizontal" },
-    -- v = { "ToggleTerm direction=vertical size=80", "Vertical" },
-  }
   lvim.builtin.which_key.mappings["u"] = {
     name = "Utils",
     z = { "<cmd>ZenMode<cr>", "Zen Mode" },
@@ -120,9 +126,9 @@ M.config = function()
   lvim.builtin.which_key.mappings["c"] = { "<cmd>BufferKill<CR>", "Close Buffer" }
   lvim.builtin.which_key.mappings["b"] = {
     name = "Buffers",
-    -- f = { "<cmd>Telescope buffers<cr>", "Find Buffers" },
     b = { "<cmd>lua require('user.telescope').find_buffers()<cr>", "Find Buffers" },
     c = { "<cmd>BufferKill<cr>", "Close Current" },
+    f = { "<cmd>b#<cr>", "Previous" },
     h = { "<cmd>BufferLineCloseLeft<cr>", "Close to Left" },
     l = { "<cmd>BufferLineCloseRight<cr>", "Close to Right" },
     j = { "<cmd>BufferLineMovePrev<cr>", "Move Previous" },
@@ -153,10 +159,10 @@ M.config = function()
     e = { "<cmd>Telescope oldfiles<cr>", "History" },
     f = { "<cmd>Telescope find_files<cr>", "Find File" },
     g = { "<cmd>lua require('user.telescope').git_files()<cr>", "Git Files" },
-    i = { "<cmd>lua require('user.telescope').installed_plugins()<cr>", "Installed Plugins" },
     l = { "<cmd>Telescope resume<cr>", "Last Search" },
     p = { "<cmd>lua require('user.telescope').project_search()<cr>", "Project" },
-    r = { "<cmd>lua require('telescope').extensions.frecency.frecency{}<cr>", "Frecency" },
+    R = { "<cmd>lua require('telescope').extensions.frecency.frecency{}<cr>", "Frecency" },
+    r = { "<cmd>lua require('user.telescope').workspace_frequency()<cr>", "Frecency" },
     s = { "<cmd>lua require('user.telescope').git_status()<cr>", "Git Status" },
     w = { "<cmd>Telescope live_grep theme=ivy<cr>", "Live Grep" },
     W = { "<cmd>lua require('user.telescope').grep_cursor_string()<cr>", "Live Grep" },
@@ -167,6 +173,8 @@ M.config = function()
     b = { "<cmd>Telescope git_branches<cr>", "Checkout branch" },
     c = { "<cmd>Telescope colorscheme<cr>", "Colorscheme" },
     h = { "<cmd>Telescope help_tags<cr>", "Find Help" },
+    i = { "<cmd>lua require('user.telescope').installed_plugins()<cr>", "Installed Plugins" },
+    j = { "<cmd>Telescope jumplist<cr>", "Man Pages" },
     M = { "<cmd>Telescope man_pages<cr>", "Man Pages" },
     R = { "<cmd>Telescope registers<cr>", "Registers" },
     k = { "<cmd>Telescope keymaps<cr>", "Keymaps" },
@@ -188,22 +196,22 @@ M.config = function()
   lvim.builtin.which_key.mappings["l"] = {
     name = "LSP",
 
-    a = { "<cmd>lua require('lvim.core.telescope').code_actions()<cr>", "Code Action" },
+    a = { "<cmd>lua require('user.telescope').code_actions()<cr>", "Code Action" },
     f = { "<cmd>lua vim.lsp.buf.formatting()<cr>", "Format" },
     j = { "<cmd>lua vim.diagnostic.goto_next()<cr>", "Next Diagnostic" },
     k = { "<cmd>lua vim.diagnostic.goto_prev()<cr>", "Prev Diagnostic" },
     l = { "<cmd>lua vim.lsp.codelens.run()<cr>", "CodeLens Action" },
     q = { "<cmd>lua vim.diagnostic.setloclist()<cr>", "Quickfix" },
-    r = { "<cmd>lua vim.lsp.buf.rename()<cr>", "Rename" },
+    R = { "<cmd>lua vim.lsp.buf.rename()<cr>", "Rename" },
     s = { "<cmd>Telescope lsp_document_symbols<cr>", "Document Symbols" },
     S = { "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>", "Workspace Symbols" },
     w = { "<cmd>Telescope diagnostics bufnr=0 theme=get_ivy<cr>", "Buffer Diagnostics" },
     W = { "<cmd>Telescope diagnostics<cr>", "Diagnostics" },
 
-    d = { "<cmd>lua vim.lsp.buf.definition()<CR>", "Goto Definition" },
+    d = { "<cmd>lua require('user.telescope').lsp_definitions()<CR>", "Goto Definition" },
     D = { "<cmd>lua vim.lsp.buf.declaration()<CR>", "Goto declaration" },
-    i = { "<cmd>lua vim.lsp.buf.references()<CR>", "Goto references" },
-    I = { "<cmd>lua vim.lsp.buf.implementation()<CR>", "Goto Implementation" },
+    r = { "<cmd>lua require('user.telescope').lsp_references()<CR>", "Goto references" },
+    i = { "<cmd>lua require('user.telescope').lsp_implementations()<CR>", "Goto Implementation" },
     h = { "<cmd>lua vim.lsp.buf.signature_help()<CR>", "show signature help" },
 
     p = {
@@ -216,11 +224,11 @@ M.config = function()
       name = "Utils",
       i = { "<cmd>LspInfo<cr>", "Lsp Info" },
       I = { "<cmd>LspInstallInfo<cr>", "Install" },
-      R = { "<cmd>LspRestart<cr>", "Restart" },
+      r = { "<cmd>LspRestart<cr>", "Restart" },
     },
   }
   if lvim.user.fancy_rename then
-    lvim.builtin.which_key.mappings["lr"] = { "<cmd>lua require('renamer').rename()<cr>", "Rename" }
+    lvim.builtin.which_key.mappings["lR"] = { "<cmd>lua require('renamer').rename()<cr>", "Rename" }
   end
   lvim.builtin.which_key.mappings["lt"] = {
     name = "+Trouble",

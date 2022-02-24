@@ -60,9 +60,7 @@ M.config = function()
       event = { "BufRead" },
     },
     {
-      -- NOTE: temporary workaround for neovim head, change back to simrat39 once merged
-      "zeertzjq/symbols-outline.nvim",
-      branch = "patch-1",
+      "simrat39/symbols-outline.nvim",
       setup = function()
         require("user.symbols_outline").config()
       end,
@@ -246,6 +244,16 @@ M.config = function()
         require("user.auto_session").config()
       end,
       disable = not lvim.user.auto_session.active,
+    },
+    {
+      "nvim-telescope/telescope-file-browser.nvim",
+    },
+    {
+      "kevinhwang91/nvim-bqf",
+      config = function()
+        require("user.bqf").config()
+      end,
+      event = "BufRead",
     },
   }
 end

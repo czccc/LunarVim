@@ -539,11 +539,16 @@ M.config = function()
   }
 
   ins_right {
+    "filetype",
+    icons_enabled = true,
+    color = { fg = colors.green, gui = "bold" },
+    cond = conditions.hide_in_width,
+  }
+  ins_right {
     "location",
     padding = 0,
     color = { fg = colors.orange },
   }
-
   ins_right {
     function()
       local function format_file_size(file)

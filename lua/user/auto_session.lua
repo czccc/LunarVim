@@ -27,7 +27,7 @@ M.config = function()
     auto_session_suppress_dirs = nil,
     -- the configs below are lua only
     bypass_session_save_file_types = nil,
-    post_restore_cmds = { restore_nvim_tree },
+    -- post_restore_cmds = { restore_nvim_tree },
   }
 end
 

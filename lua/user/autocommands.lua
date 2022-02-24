@@ -42,7 +42,10 @@ augroup END
 
   lvim.autocommands.custom_groups = {
     -- bug fix: fold
-    { "BufRead", "*", ":normal! zX<CR>" },
+    -- { "BufRead", "*", ":normal! zX<CR>" },
+
+    -- update file
+    { "CursorHold", "* checktime" },
 
     { "CursorHold", "*.rs,*.go,*.ts,*.tsx", codelens_viewer },
 
@@ -60,7 +63,7 @@ augroup END
 
     -- Telescope
     -- { "user", "TelescopeFindPre", "setlocal number" },
-    -- { "user", "TelescopePreviewerLoaded", "setlocal number relativenumber wrap list" },
+    { "user", "TelescopePreviewerLoaded", "setlocal number relativenumber wrap list" },
   }
 end
 

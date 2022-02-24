@@ -194,40 +194,59 @@ function M.codelens_actions()
   builtin.lsp_codelens_actions(themes.get_dropdown(opts))
 end
 
+-- show definitions to this using language server
+function M.lsp_definitions()
+  local opts = {
+    layout_strategy = "bottom_pane",
+    layout_config = {
+      height = 25,
+    },
+    border = true,
+    borderchars = {
+      prompt = { "─", "│", " ", "│", "╭", "╮", "│", "│" },
+      results = { "─", "│", "─", "│", "├", "┤", "╯", "╰" },
+      preview = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
+    },
+    sorting_strategy = "ascending",
+    ignore_filename = false,
+  }
+  builtin.lsp_definitions(opts)
+end
 -- show refrences to this using language server
 function M.lsp_references()
   local opts = {
-    layout_strategy = "vertical",
+    layout_strategy = "bottom_pane",
     layout_config = {
-      prompt_position = "top",
+      height = 25,
+    },
+    border = true,
+    borderchars = {
+      prompt = { "─", "│", " ", "│", "╭", "╮", "│", "│" },
+      results = { "─", "│", "─", "│", "├", "┤", "╯", "╰" },
+      preview = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
     },
     sorting_strategy = "ascending",
     ignore_filename = false,
   }
   builtin.lsp_references(opts)
 end
-
 -- show implementations of the current thingy using language server
 function M.lsp_implementations()
   local opts = {
-    layout_strategy = "vertical",
+    layout_strategy = "bottom_pane",
     layout_config = {
-      prompt_position = "top",
+      height = 25,
+    },
+    border = true,
+    borderchars = {
+      prompt = { "─", "│", " ", "│", "╭", "╮", "│", "│" },
+      results = { "─", "│", "─", "│", "├", "┤", "╯", "╰" },
+      preview = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
     },
     sorting_strategy = "ascending",
     ignore_filename = false,
   }
   builtin.lsp_implementations(opts)
-end
-
--- find files in the upper directory
-function M.find_updir()
-  local up_dir = vim.fn.getcwd():gsub("(.*)/.*$", "%1")
-  local opts = {
-    cwd = up_dir,
-  }
-
-  builtin.find_files(opts)
 end
 
 function M.installed_plugins()
@@ -245,7 +264,11 @@ function M.project_search()
 end
 
 function M.project_oldfiles()
-  builtin.oldfiles {}
+  builtin.oldfiles {
+    previewer = false,
+    layout_strategy = "vertical",
+    cwd = require("lspconfig/util").root_pattern ".git"(vim.fn.expand "%:p"),
+  }
 end
 
 function M.find_buffers()
@@ -317,10 +340,6 @@ function M.search_only_certain_files()
   }
 end
 
-function M.builtin()
-  builtin.builtin()
-end
-
 function M.git_files()
   local path = vim.fn.expand "%:h"
   if path == "" then
@@ -377,6 +396,13 @@ function M.grep_cursor_string()
     },
   }
   require("telescope.builtin").live_grep(opts)
+end
+
+function M.workspace_frequency()
+  local opts = {
+    default_text = ":CWD:",
+  }
+  require("telescope").extensions.frecency.frecency(opts)
 end
 
 return M

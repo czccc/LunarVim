@@ -136,11 +136,16 @@ M.config = function()
   lvim.builtin.which_key.mappings["E"] = { "<cmd>NvimTreeToggle<CR>", "Explorer" }
   lvim.builtin.nvimtree.on_config_done = function(nvim_tree_config)
     local tree_cb = nvim_tree_config.nvim_tree_callback
+    -- local nvim_refresh = function()
+    --   require("nvim-tree.actions.reloaders").reload_explorer()
+    --   require("nvim-tree.actions.reloaders").reload_git()
+    -- end
     lvim.builtin.nvimtree.setup.view.mappings.list = {
       { key = "<Tab>", cb = "<C-w>l" },
       { key = { "l", "<CR>", "o" }, cb = tree_cb "edit" },
       { key = "h", cb = tree_cb "close_node" },
       { key = "v", cb = tree_cb "vsplit" },
+      -- { key = "R", action = "refresh", action_cb = nvim_refresh },
       { key = "C", cb = tree_cb "cd" },
       { key = "gtf", cb = "<cmd>lua require'lvim.core.nvimtree'.start_telescope('find_files')<cr>" },
       { key = "gtg", cb = "<cmd>lua require'lvim.core.nvimtree'.start_telescope('live_grep')<cr>" },
@@ -234,9 +239,6 @@ M.config = function()
   -- =========================================
   -- lvim.builtin.telescope.defaults.path_display = { "smart", "absolute", "truncate" }
   lvim.builtin.telescope.defaults.path_display = { shorten = 10 }
-  lvim.builtin.telescope.defaults.pickers.find_files = {
-    find_command = { "fd", "--type=file", "--hidden", "--smart-case", "--strip-cwd-prefix" },
-  }
   lvim.builtin.telescope.defaults.winblend = 6
   lvim.builtin.telescope.defaults.file_ignore_patterns = {
     "vendor/*",
@@ -306,6 +308,21 @@ M.config = function()
       ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
     },
   }
+  local telescope_actions = require "telescope.actions.set"
+  lvim.builtin.telescope.defaults.pickers.find_files = {
+    attach_mappings = function(_)
+      telescope_actions.select:enhance {
+        post = function()
+          vim.cmd ":normal! zx"
+        end,
+      }
+      return true
+    end,
+    find_command = { "fd", "--type=file", "--hidden", "--smart-case", "--strip-cwd-prefix" },
+  }
+  lvim.builtin.telescope.on_config_done = function(telescope)
+    telescope.load_extension "file_browser"
+  end
 
   -- Terminal
   -- =========================================
@@ -323,6 +340,15 @@ M.config = function()
   }
 
   -- WhichKey
+  lvim.builtin.which_key.setup.plugins.presets = {
+    operators = true, -- adds help for operators like d, y, ...
+    motions = true, -- adds help for motions
+    text_objects = true, -- help for text objects triggered after entering an operator
+    windows = true, -- default bindings on <c-w>
+    nav = true, -- misc bindings to work with windows
+    z = true, -- bindings for folds, spelling and others prefixed with z
+    g = true, -- bindings for prefixed with g
+  }
   lvim.builtin.which_key.on_config_done = require("user.whichkey").config
 end
 
