@@ -14,7 +14,6 @@ lvim.user.lastplace = { active = true } -- change to false if you are jumping to
 lvim.user.persistence = { active = false } -- change to false if you don't want persistence
 lvim.user.auto_session = { active = true }
 lvim.user.fancy_statusline = { active = true } -- enable/disable fancy statusline
-lvim.user.fancy_bufferline = { active = false } -- enable/disable fancy bufferline
 lvim.user.fancy_dashboard = { active = true } -- enable/disable fancy dashboard
 lvim.user.fancy_wild_menu = { active = true } -- enable/disable use wilder.nvim
 lvim.user.fancy_rename = { active = true } -- enable/disable custom rename
@@ -33,6 +32,8 @@ require("user.builtin").config()
 -- =========================================
 if lvim.user.fancy_statusline.active then
   require("user.lualine").config()
+else
+  lvim.builtin.lualine.style = "lvim"
 end
 
 -- Debugging
