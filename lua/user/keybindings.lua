@@ -33,9 +33,6 @@ M.set_hlslens_keymaps = function()
 end
 
 M.config = function()
-  -- Additional keybindings
-  -- =========================================
-
   -- lvim.keys.insert_mode["jk"] = "<ESC>"
   lvim.keys.normal_mode["<Esc>"] = ":noh<CR>"
   lvim.keys.normal_mode["<C-a>"] = "ggVG"
@@ -104,10 +101,12 @@ M.config = function()
 
   -- WhichKey keybindings
   -- =========================================
+  lvim.builtin.which_key.mappings["Q"] = { "<cmd>wqa<cr>", "Quit" }
   lvim.builtin.which_key.mappings["u"] = {
     name = "Utils",
     z = { "<cmd>ZenMode<cr>", "Zen Mode" },
     o = { "<cmd>SymbolsOutline<cr>", "Symbol Outline" },
+    g = { "<cmd>lua require('nvim-tree.actions.reloaders').reload_git()<cr>", "NvimTree Reload" },
   }
   if lvim.user.fancy_diff.active then
     lvim.builtin.which_key.mappings["ud"] = { "<cmd>DiffviewOpen<cr>", "diffview: diff HEAD" }

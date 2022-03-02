@@ -243,6 +243,7 @@ M.config = function()
       config = function()
         require("user.auto_session").config()
       end,
+      after = { "kyazdani42/nvim-tree.lua" },
       disable = not lvim.user.auto_session.active,
     },
     {

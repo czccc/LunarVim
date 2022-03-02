@@ -55,6 +55,9 @@ augroup END
     -- dashboard
     { "FileType", "alpha", "nnoremap <silent> <buffer> q :q<CR>" },
 
+    -- symbol outline
+    { "FileType", "Outline", "setlocal signcolumn=no nowrap" },
+
     -- c, cpp
     -- { "Filetype", "c,cpp", "nnoremap <leader>H <Cmd>ClangdSwitchSourceHeader<CR>" },
 

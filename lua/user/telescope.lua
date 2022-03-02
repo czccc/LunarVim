@@ -1,48 +1,8 @@
 local M = {}
 -- local actions = require "telescope.actions"
-local action_state = require "telescope.actions.state"
+-- local action_state = require "telescope.actions.state"
 local themes = require "telescope.themes"
 local builtin = require "telescope.builtin"
-local actions = require "telescope.actions"
-
-function M._multiopen(prompt_bufnr, open_cmd)
-  local picker = action_state.get_current_picker(prompt_bufnr)
-  local num_selections = table.getn(picker:get_multi_selection()) -- luacheck: ignore
-  local border_contents = picker.prompt_border.contents[1]
-  if not (string.find(border_contents, "Find Files") or string.find(border_contents, "Git Files")) then
-    actions.select_default(prompt_bufnr)
-    return
-  end
-  if num_selections > 1 then
-    vim.cmd "bw!"
-    for _, entry in ipairs(picker:get_multi_selection()) do
-      vim.cmd(string.format("%s %s", open_cmd, entry.value))
-    end
-    vim.cmd "stopinsert"
-  else
-    if open_cmd == "vsplit" then
-      actions.file_vsplit(prompt_bufnr)
-    elseif open_cmd == "split" then
-      actions.file_split(prompt_bufnr)
-    elseif open_cmd == "tabe" then
-      actions.file_tab(prompt_bufnr)
-    else
-      actions.file_edit(prompt_bufnr)
-    end
-  end
-end
-function M.multi_selection_open_vsplit(prompt_bufnr)
-  M._multiopen(prompt_bufnr, "vsplit")
-end
-function M.multi_selection_open_split(prompt_bufnr)
-  M._multiopen(prompt_bufnr, "split")
-end
-function M.multi_selection_open_tab(prompt_bufnr)
-  M._multiopen(prompt_bufnr, "tabe")
-end
-function M.multi_selection_open(prompt_bufnr)
-  M._multiopen(prompt_bufnr, "edit")
-end
 
 -- beautiful default layout for telescope prompt
 function M.layout_config()
@@ -99,58 +59,6 @@ function M.find_string()
     },
   }
   builtin.live_grep(opts)
-end
-
--- fince file browser using telescope instead of lir
-function M.file_browser()
-  local opts
-
-  opts = {
-    sorting_strategy = "ascending",
-    scroll_strategy = "cycle",
-    layout_config = {
-      prompt_position = "top",
-    },
-    file_ignore_patterns = { "vendor/*" },
-
-    attach_mappings = function(prompt_bufnr, map)
-      local current_picker = action_state.get_current_picker(prompt_bufnr)
-
-      local modify_cwd = function(new_cwd)
-        current_picker.cwd = new_cwd
-        current_picker:refresh(opts.new_finder(new_cwd), { reset_prompt = true })
-      end
-
-      map("i", "-", function()
-        modify_cwd(current_picker.cwd .. "/..")
-      end)
-
-      map("i", "~", function()
-        modify_cwd(vim.fn.expand "~")
-      end)
-
-      local modify_depth = function(mod)
-        return function()
-          opts.depth = opts.depth + mod
-
-          local this_picker = action_state.get_current_picker(prompt_bufnr)
-          this_picker:refresh(opts.new_finder(current_picker.cwd), { reset_prompt = true })
-        end
-      end
-
-      map("i", "<M-=>", modify_depth(1))
-      map("i", "<M-+>", modify_depth(-1))
-
-      map("n", "yy", function()
-        local entry = action_state.get_selected_entry()
-        vim.fn.setreg("+", entry.value)
-      end)
-
-      return true
-    end,
-  }
-
-  builtin.file_browser(opts)
 end
 
 -- show code actions in a fancy floating window
@@ -403,6 +311,11 @@ function M.workspace_frequency()
     default_text = ":CWD:",
   }
   require("telescope").extensions.frecency.frecency(opts)
+end
+
+function M.file_browser()
+  local opts = {}
+  require("telescope").extensions.file_browser.file_browser(opts)
 end
 
 return M
