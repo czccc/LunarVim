@@ -255,6 +255,44 @@ M.config = function()
       end,
       event = "BufRead",
     },
+    {
+      "kevinhwang91/nvim-hlslens",
+      config = function()
+        require("user.hlslens").config()
+      end,
+      event = "BufRead",
+    },
+    {
+      "petertriho/nvim-scrollbar",
+      config = function()
+        require("user.scrollbar").config()
+      end,
+      event = "BufRead",
+    },
+    {
+      "anuvyklack/pretty-fold.nvim",
+      config = function()
+        require("pretty-fold").setup {}
+        require("pretty-fold.preview").setup()
+      end,
+      event = "BufRead",
+      disable = true,
+    },
+    {
+      "Pocco81/AutoSave.nvim",
+      config = function()
+        require("user.autosave").config()
+      end,
+      event = "BufRead",
+      disable = true,
+    },
+    {
+      "p00f/clangd_extensions.nvim",
+      config = function()
+        require("user.clangd_extension").config()
+      end,
+      ft = { "c", "cpp", "objc", "objcpp" },
+    },
   }
 end
 

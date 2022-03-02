@@ -12,6 +12,26 @@ M.set_terminal_keymaps = function()
   vim.api.nvim_buf_set_keymap(0, "t", "<C-l>", [[<C-\><C-n><C-W>l]], opts)
 end
 
+M.set_hlslens_keymaps = function()
+  local opts = { noremap = true, silent = true }
+  vim.api.nvim_set_keymap(
+    "n",
+    "n",
+    "<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>",
+    opts
+  )
+  vim.api.nvim_set_keymap(
+    "n",
+    "N",
+    "<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>",
+    opts
+  )
+  vim.api.nvim_set_keymap("n", "*", "*<Cmd>lua require('hlslens').start()<CR>", opts)
+  vim.api.nvim_set_keymap("n", "#", "#<Cmd>lua require('hlslens').start()<CR>", opts)
+  vim.api.nvim_set_keymap("n", "g*", "g*<Cmd>lua require('hlslens').start()<CR>", opts)
+  vim.api.nvim_set_keymap("n", "g#", "g#<Cmd>lua require('hlslens').start()<CR>", opts)
+end
+
 M.config = function()
   -- Additional keybindings
   -- =========================================
@@ -213,6 +233,8 @@ M.config = function()
     r = { "<cmd>lua require('user.telescope').lsp_references()<CR>", "Goto references" },
     i = { "<cmd>lua require('user.telescope').lsp_implementations()<CR>", "Goto Implementation" },
     h = { "<cmd>lua vim.lsp.buf.signature_help()<CR>", "show signature help" },
+
+    v = { "<cmd>ClangdSwitchSourceHeader<CR>", "show signature help" },
 
     p = {
       name = "Peek",
