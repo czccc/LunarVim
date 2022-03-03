@@ -136,16 +136,16 @@ M.config = function()
   lvim.builtin.which_key.mappings["E"] = { "<cmd>NvimTreeToggle<CR>", "Explorer" }
   lvim.builtin.nvimtree.on_config_done = function(nvim_tree_config)
     local tree_cb = nvim_tree_config.nvim_tree_callback
-    -- local nvim_refresh = function()
-    --   require("nvim-tree.actions.reloaders").reload_explorer()
-    --   require("nvim-tree.actions.reloaders").reload_git()
-    -- end
+    local nvim_refresh = function()
+      require("nvim-tree.actions.reloaders").reload_git()
+      require("nvim-tree.actions.reloaders").reload_explorer()
+    end
     lvim.builtin.nvimtree.setup.view.mappings.list = {
       { key = "<Tab>", cb = "<C-w>l" },
       { key = { "l", "<CR>", "o" }, cb = tree_cb "edit" },
       { key = "h", cb = tree_cb "close_node" },
       { key = "v", cb = tree_cb "vsplit" },
-      -- { key = "R", action = "refresh", action_cb = nvim_refresh },
+      { key = "R", action = "refresh", action_cb = nvim_refresh },
       { key = "C", cb = tree_cb "cd" },
       { key = "gtf", cb = "<cmd>lua require'lvim.core.nvimtree'.start_telescope('find_files')<cr>" },
       { key = "gtg", cb = "<cmd>lua require'lvim.core.nvimtree'.start_telescope('live_grep')<cr>" },
