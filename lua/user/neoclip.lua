@@ -1,6 +1,19 @@
 local M = {}
 local Log = require "lvim.core.log"
 
+local function is_whitespace(line)
+  return vim.fn.match(line, [[^\s*$]]) ~= -1
+end
+
+local function all(tbl, check)
+  for _, entry in ipairs(tbl) do
+    if not check(entry) then
+      return false
+    end
+  end
+  return true
+end
+
 M.config = function()
   local status_ok, neoclip = pcall(require, "neoclip")
   if not status_ok then
@@ -13,12 +26,15 @@ M.config = function()
     enable_persistent_history = true,
     db_path = vim.fn.stdpath "data" .. "/neoclip.sqlite3",
     default_register = { '"', "+", "*" },
-    keys = {
-      telescope = {
-        i = { select = "<c-p>", paste = "<CR>", paste_behind = "<c-k>" },
-        n = { select = "p", paste = "<CR>", paste_behind = "P" },
-      },
-    },
+    filter = function(data)
+      return not all(data.event.regcontents, is_whitespace)
+    end,
+    -- keys = {
+    --   telescope = {
+    --     i = { select = "<c-p>", paste = "<CR>", paste_behind = "<c-k>" },
+    --     n = { select = "p", paste = "<CR>", paste_behind = "P" },
+    --   },
+    -- },
   }
   local function clip()
     local opts = {
