@@ -40,9 +40,12 @@ M.config = function()
   lvim.keys.insert_mode["<C-s>"] = "<ESC>:w<CR>"
   lvim.keys.normal_mode["D"] = "d$"
   lvim.keys.normal_mode["Y"] = "y$"
+  lvim.keys.normal_mode["s"] = "viw"
   lvim.keys.visual_mode["p"] = [["_dP]]
   lvim.keys.normal_mode["c"] = [["_c]]
+  lvim.keys.visual_mode["c"] = [["_c]]
   lvim.keys.normal_mode["x"] = [["_x]]
+  lvim.keys.visual_mode["x"] = [["_x]]
   -- lvim.keys.command_mode["w!!"] = "execute 'silent! write !sudo tee % >/dev/null' <bar> edit!"
 
   lvim.keys.normal_mode["<S-x>"] = ":BufferKill<CR>"
