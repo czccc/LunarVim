@@ -109,6 +109,7 @@ M.config = function()
           key_bindings = {
             file_panel = { q = "<Cmd>DiffviewClose<CR>" },
             view = { q = "<Cmd>DiffviewClose<CR>" },
+            file_history_panel = { q = "<Cmd>DiffviewClose<CR>" },
           },
         }
       end,

@@ -107,6 +107,7 @@ M.config = function()
     s = { "<cmd>SymbolsOutline<cr>", "Symbol Outline" },
   }
   if lvim.user.fancy_diff.active then
+    lvim.builtin.which_key.mappings["ud"] = { "<cmd>DiffviewFileHistory<cr>", "diffview: diff HEAD" }
     lvim.builtin.which_key.mappings["ud"] = { "<cmd>DiffviewOpen<cr>", "diffview: diff HEAD" }
   end
   if lvim.user.sidebar.active then
