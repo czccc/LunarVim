@@ -33,20 +33,16 @@ M.set_hlslens_keymaps = function()
 end
 
 M.config = function()
-  -- lvim.keys.insert_mode["jk"] = "<ESC>"
   lvim.keys.normal_mode["<Esc>"] = ":noh<CR>"
   lvim.keys.normal_mode["<C-a>"] = "ggVG"
   lvim.keys.insert_mode["<C-a>"] = "<ESC>ggVG"
   lvim.keys.normal_mode["<C-s>"] = ":w<CR>"
   lvim.keys.insert_mode["<C-s>"] = "<ESC>:w<CR>"
-  -- lvim.keys.normal_mode["<C-q>"] = ":q<CR>"
-  -- lvim.keys.insert_mode["<C-q>"] = "<ESC>:q<CR>"
-  -- lvim.keys.insert_mode["<C-Q>"] = "<ESC>:q!<CR>"
-
-  -- lvim.keys.normal_mode["<esc><esc>"] = "<cmd>nohlsearch<cr>"
   lvim.keys.normal_mode["D"] = "d$"
   lvim.keys.normal_mode["Y"] = "y$"
   lvim.keys.visual_mode["p"] = [["_dP]]
+  lvim.keys.normal_mode["c"] = [["_c]]
+  lvim.keys.normal_mode["x"] = [["_x]]
   -- lvim.keys.command_mode["w!!"] = "execute 'silent! write !sudo tee % >/dev/null' <bar> edit!"
 
   lvim.keys.normal_mode["<S-x>"] = ":BufferKill<CR>"
@@ -105,15 +101,13 @@ M.config = function()
   lvim.builtin.which_key.mappings["u"] = {
     name = "Utils",
     z = { "<cmd>ZenMode<cr>", "Zen Mode" },
-    o = { "<cmd>SymbolsOutline<cr>", "Symbol Outline" },
-    g = { "<cmd>lua require('nvim-tree.actions.reloaders').reload_git()<cr>", "NvimTree Reload" },
+    s = { "<cmd>SymbolsOutline<cr>", "Symbol Outline" },
   }
   if lvim.user.fancy_diff.active then
     lvim.builtin.which_key.mappings["ud"] = { "<cmd>DiffviewOpen<cr>", "diffview: diff HEAD" }
   end
   if lvim.user.sidebar.active then
-    lvim.keys.normal_mode["E"] = ":SidebarNvimToggle<cr>"
-    lvim.builtin.which_key.mappings["uE"] = { "<cmd>SidebarNvimToggle<CR>", "Sidebar" }
+    lvim.builtin.which_key.mappings["ue"] = { "<cmd>SidebarNvimToggle<CR>", "Sidebar" }
   end
   lvim.builtin.which_key.mappings[";"] = nil
   if lvim.user.fancy_dashboard.active then
@@ -173,17 +167,19 @@ M.config = function()
 
   lvim.builtin.which_key.mappings["f"] = {
     name = "Find Files",
-    t = { "<cmd>Telescope<cr>", "Telescope" },
     b = { "<cmd>lua require('user.telescope').curbuf()<cr>", "Current Buffer" },
+    B = { "<cmd>lua require('user.telescope').file_browser()<cr>", "Current Buffer" },
     e = { "<cmd>Telescope oldfiles<cr>", "History" },
     f = { "<cmd>Telescope find_files<cr>", "Find File" },
     g = { "<cmd>lua require('user.telescope').git_files()<cr>", "Git Files" },
+    j = { "<cmd>Telescope jumplist<cr>", "Last Search" },
     l = { "<cmd>Telescope resume<cr>", "Last Search" },
-    p = { "<cmd>lua require('user.telescope').project_search()<cr>", "Project" },
-    R = { "<cmd>lua require('telescope').extensions.frecency.frecency{}<cr>", "Frecency" },
+    m = { "<cmd>Telescope masks<cr>", "Last Search" },
+    p = { "<cmd>lua require('user.telescope').project_search()<cr>", "Project Files" },
     r = { "<cmd>lua require('user.telescope').workspace_frequency()<cr>", "Frecency" },
     s = { "<cmd>lua require('user.telescope').git_status()<cr>", "Git Status" },
-    w = { "<cmd>Telescope live_grep theme=ivy<cr>", "Live Grep" },
+    t = { "<cmd>TodoTelescope<cr>", "Telescope" },
+    w = { "<cmd>lua require('user.telescope').live_grep()<cr>", "Live Grep" },
     W = { "<cmd>lua require('user.telescope').grep_cursor_string()<cr>", "Live Grep" },
     z = { "<cmd>lua require('user.telescope').search_only_certain_files()<cr>", "Certain Filetype" },
   }
@@ -191,17 +187,19 @@ M.config = function()
     name = "Search",
     b = { "<cmd>Telescope git_branches<cr>", "Checkout branch" },
     c = { "<cmd>Telescope colorscheme<cr>", "Colorscheme" },
-    h = { "<cmd>Telescope help_tags<cr>", "Find Help" },
-    i = { "<cmd>lua require('user.telescope').installed_plugins()<cr>", "Installed Plugins" },
-    j = { "<cmd>Telescope jumplist<cr>", "Man Pages" },
-    M = { "<cmd>Telescope man_pages<cr>", "Man Pages" },
-    R = { "<cmd>Telescope registers<cr>", "Registers" },
-    k = { "<cmd>Telescope keymaps<cr>", "Keymaps" },
-    C = { "<cmd>Telescope commands<cr>", "Commands" },
-    p = {
+    C = {
       "<cmd>lua require('telescope.builtin.internal').colorscheme({enable_preview = true})<cr>",
       "Colorscheme with Preview",
     },
+    h = { "<cmd>Telescope help_tags<cr>", "Find Help" },
+    i = { "<cmd>lua require('user.telescope').installed_plugins()<cr>", "Installed Plugins" },
+    j = { "<cmd>Telescope jumplist<cr>", "Man Pages" },
+    k = { "<cmd>Telescope keymaps<cr>", "Keymaps" },
+    m = { "<cmd>Telescope commands<cr>", "Commands" },
+    M = { "<cmd>Telescope man_pages<cr>", "Man Pages" },
+    p = { "<cmd>lua require('user.telescope').projects()<cr>", "Projects" },
+    r = { "<cmd>Telescope registers<cr>", "Registers" },
+    s = { "<cmd>Telescope<cr>", "Telescope" },
   }
   lvim.builtin.which_key.mappings["n"] = {
     name = "Neogen",
@@ -214,7 +212,6 @@ M.config = function()
   -- LSP
   lvim.builtin.which_key.mappings["l"] = {
     name = "LSP",
-
     a = { "<cmd>lua require('user.telescope').code_actions()<cr>", "Code Action" },
     f = { "<cmd>lua vim.lsp.buf.formatting()<cr>", "Format" },
     j = { "<cmd>lua vim.diagnostic.goto_next()<cr>", "Next Diagnostic" },
@@ -247,20 +244,20 @@ M.config = function()
       I = { "<cmd>LspInstallInfo<cr>", "Install" },
       r = { "<cmd>LspRestart<cr>", "Restart" },
     },
+    t = {
+      name = "+Trouble",
+      d = { "<cmd>Trouble document_diagnostics<cr>", "Diagnosticss" },
+      f = { "<cmd>Trouble lsp_definitions<cr>", "Definitions" },
+      l = { "<cmd>Trouble loclist<cr>", "LocationList" },
+      q = { "<cmd>Trouble quickfix<cr>", "QuickFix" },
+      r = { "<cmd>Trouble lsp_references<cr>", "References" },
+      t = { "<cmd>TodoTrouble<cr>", "Todo" },
+      w = { "<cmd>Trouble workspace_diagnostics<cr>", "Diagnosticss" },
+    },
   }
   if lvim.user.fancy_rename then
     lvim.builtin.which_key.mappings["lR"] = { "<cmd>lua require('renamer').rename()<cr>", "Rename" }
   end
-  lvim.builtin.which_key.mappings["lt"] = {
-    name = "+Trouble",
-    d = { "<cmd>Trouble document_diagnostics<cr>", "Diagnosticss" },
-    f = { "<cmd>Trouble lsp_definitions<cr>", "Definitions" },
-    l = { "<cmd>Trouble loclist<cr>", "LocationList" },
-    q = { "<cmd>Trouble quickfix<cr>", "QuickFix" },
-    r = { "<cmd>Trouble lsp_references<cr>", "References" },
-    t = { "<cmd>TodoLocList <cr>", "Todo" },
-    w = { "<cmd>Trouble workspace_diagnostics<cr>", "Diagnosticss" },
-  }
 
   -- DAP
   if lvim.builtin.dap.active then

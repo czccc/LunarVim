@@ -41,6 +41,13 @@ M.config = function()
 
   hlslens.setup(opts)
   require("user.keybindings").set_hlslens_keymaps()
+
+  vim.cmd [[highlight default link HlSearchNear WildMenu]]
+  vim.cmd [[highlight default link HlSearchLens Visual]]
+  vim.cmd [[highlight default link HlSearchLensNear WildMenu]]
+  vim.cmd [[highlight default link HlSearchFloat Visual]]
+  -- vim.cmd [[autocmd ColorScheme * highlight default link IncSearch Visual]]
+  -- vim.cmd [[autocmd ColorScheme * highlight default link Search Visual]]
 end
 
 return M

@@ -65,7 +65,7 @@ M.config = function()
         require("user.symbols_outline").config()
       end,
       event = "BufReadPost",
-      -- cmd = "SymbolsOutline",
+      cmd = "SymbolsOutline",
     },
     {
       "sidebar-nvim/sidebar.nvim",
@@ -73,6 +73,7 @@ M.config = function()
         require("user.sidebar").config()
       end,
       event = "BufRead",
+      cmd = "SidebarNvimToggle",
       disable = not lvim.user.sidebar.active,
     },
     {
@@ -195,11 +196,19 @@ M.config = function()
       "folke/trouble.nvim",
       config = function()
         require("trouble").setup {
-          auto_open = true,
+          auto_open = false,
           auto_close = true,
           padding = false,
           height = 10,
           use_diagnostic_signs = true,
+          action_keys = { -- key mappings for actions in the trouble list
+            close = { "q", "<esc>" }, -- close the list
+            cancel = {}, -- cancel the preview and get back to your last window / buffer / cursor
+            jump = "o", -- jump to the diagnostic or open / close folds
+            jump_close = { "<cr>" }, -- jump to the diagnostic and close the list
+            previous = { "k", "<S-tab>" }, -- preview item
+            next = { "j", "<tab>" }, -- next item
+          },
         }
       end,
       cmd = "Trouble",
@@ -215,10 +224,6 @@ M.config = function()
       event = "BufRead",
       ft = { "rust", "go", "typescript", "typescriptreact" },
     },
-    -- {
-    --   "nvim-treesitter/nvim-treesitter-textobjects",
-    --   after = "nvim-treesitter",
-    -- },
     {
       "simrat39/rust-tools.nvim",
       config = function()
@@ -239,6 +244,13 @@ M.config = function()
       end,
     },
     {
+      "danymat/neogen",
+      config = function()
+        require("neogen").setup { snippet_engine = "luasnip" }
+      end,
+      requires = "nvim-treesitter/nvim-treesitter",
+    },
+    {
       "rmagatti/auto-session",
       config = function()
         require("user.auto_session").config()
@@ -255,6 +267,7 @@ M.config = function()
         require("user.bqf").config()
       end,
       event = "BufRead",
+      disable = true,
     },
     {
       "kevinhwang91/nvim-hlslens",
