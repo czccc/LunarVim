@@ -21,36 +21,7 @@ local conditions = {
 
 local components = require "lvim.core.lualine.components"
 
-components.filename1 = {
-  function()
-    local fname = vim.fn.expand "%:p"
-    local ftype = vim.fn.expand "%:e"
-    local cwd = vim.api.nvim_call_function("getcwd", {})
-    local show_name = vim.fn.expand "%:t"
-    if #cwd > 0 and #ftype > 0 then
-      show_name = fname:sub(#cwd + 2)
-    end
-    return show_name .. "%{&readonly?'  ':''}" .. "%{&modified?'  ':''}"
-  end,
-  cond = conditions.buffer_not_empty,
-  padding = { left = 1, right = 1 },
-  color = { fg = colors.fg, gui = "bold" },
-}
-components.filename2 = {
-  function()
-    local fname = vim.fn.expand "%:p"
-    local ftype = vim.fn.expand "%:e"
-    local cwd = vim.api.nvim_call_function("getcwd", {})
-    local show_name = vim.fn.expand "%:t"
-    if #cwd > 0 and #ftype > 0 then
-      show_name = fname:sub(#cwd + 2)
-    end
-    return show_name .. "%{&readonly?'  ':''}" .. "%{&modified?'  ':''}"
-  end,
-  cond = conditions.buffer_not_empty,
-  padding = { left = 1, right = 1 },
-}
-components.filename3 = {
+components.filename = {
   "filename",
   file_status = true, -- Displays file status (readonly status, modified status)
   path = 1,
@@ -61,8 +32,7 @@ components.filename3 = {
     unnamed = "[No Name]", -- Text to show for unnamed buffers.
   },
   cond = conditions.buffer_not_empty,
-  -- padding = { left = 1, right = 1 },
-  color = { fg = colors.fg, gui = "bold" },
+  color = { gui = "bold" },
 }
 components.branch1 = {
   "b:gitsigns_head",
@@ -78,10 +48,8 @@ components.clock = {
     return kind.icons.clock .. os.date "%H:%M"
   end,
   cond = conditions.hide_in_width,
-  -- color = { fg = colors.blue, bg = colors.bg, gui = "bold" },
 }
 
-components.lsp.cond = conditions.hide_small
 components.lsp_progress = {
   function()
     local messages = vim.lsp.util.get_progress_messages()
@@ -179,7 +147,7 @@ components.mode1 = {
     return normal_icons[selector]
   end,
   color = { fg = colors.blue, gui = "bold" },
-  padding = { left = 1, right = 0 },
+  -- padding = { left = 1, right = 0 },
 }
 
 components.fileformat = {
@@ -231,12 +199,11 @@ M.config = function() -- Config
     sections = {
       -- these are to remove the defaults
       lualine_a = {},
-      lualine_b = {
+      lualine_b = {},
+      lualine_c = {
         components.mode1,
         components.branch1,
-        components.filename3,
-      },
-      lualine_c = {
+        components.filename,
         components.diff,
         components.python_env,
         components.lsp_progress,
@@ -246,8 +213,6 @@ M.config = function() -- Config
         components.diagnostics,
         components.treesitter,
         components.lsp,
-      },
-      lualine_y = {
         components.filetype,
         components.fileformat,
         components.filesize,
@@ -255,13 +220,14 @@ M.config = function() -- Config
         components.clock,
         components.scrollbar,
       },
+      lualine_y = {},
       lualine_z = {},
     },
     inactive_sections = {
       -- these are to remove the defaults
       lualine_a = {},
       lualine_b = {},
-      lualine_c = { components.filename2 },
+      lualine_c = { components.filename },
       lualine_x = { components.location },
       lualine_y = {},
       lualine_z = {},
@@ -275,7 +241,7 @@ M.config = function() -- Config
               function()
                 return vim.fn.fnamemodify(vim.fn.getcwd(), ":~")
               end,
-              color = { fg = colors.blue, gui = "bold" },
+              color = { gui = "bold" },
             },
           },
         },
@@ -295,7 +261,7 @@ M.config = function() -- Config
         filetypes = { "toggleterm" },
       },
       {
-        sections = { lualine_c = { { "filetype", color = { fg = colors.blue, gui = "bold" } } } },
+        sections = { lualine_c = { { "filetype", color = { gui = "bold" } } } },
         filetypes = { "Outline" },
       },
     },

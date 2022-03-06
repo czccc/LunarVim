@@ -11,6 +11,7 @@ M.tokyonight = function()
     "spectre_panel",
     "NeogitStatus",
     "help",
+    "Outline",
   }
   vim.g.tokyonight_cterm_colors = false
   vim.g.tokyonight_terminal_colors = true
