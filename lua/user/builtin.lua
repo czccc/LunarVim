@@ -319,6 +319,7 @@ M.config = function()
   }
   lvim.builtin.telescope.on_config_done = function(telescope)
     telescope.load_extension "file_browser"
+    -- telescope.load_extension "workspaces"
   end
 
   -- Terminal

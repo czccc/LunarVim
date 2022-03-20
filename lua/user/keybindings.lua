@@ -172,13 +172,13 @@ M.config = function()
   lvim.builtin.which_key.mappings["f"] = {
     name = "Find Files",
     b = { "<cmd>lua require('user.telescope').curbuf()<cr>", "Current Buffer" },
-    B = { "<cmd>lua require('user.telescope').file_browser()<cr>", "Current Buffer" },
+    B = { "<cmd>lua require('user.telescope').file_browser()<cr>", "File Browser" },
     e = { "<cmd>Telescope oldfiles<cr>", "History" },
     f = { "<cmd>Telescope find_files<cr>", "Find File" },
     g = { "<cmd>lua require('user.telescope').git_files()<cr>", "Git Files" },
-    j = { "<cmd>Telescope jumplist<cr>", "Last Search" },
-    l = { "<cmd>Telescope resume<cr>", "Last Search" },
-    m = { "<cmd>Telescope masks<cr>", "Last Search" },
+    j = { "<cmd>Telescope jumplist<cr>", "Jump Lists" },
+    l = { "<cmd>Telescope resume<cr>", "Resume" },
+    m = { "<cmd>Telescope marks<cr>", "Marks" },
     p = { "<cmd>lua require('user.telescope').project_search()<cr>", "Project Files" },
     r = { "<cmd>lua require('user.telescope').workspace_frequency()<cr>", "Frecency" },
     s = { "<cmd>lua require('user.telescope').git_status()<cr>", "Git Status" },
@@ -187,6 +187,11 @@ M.config = function()
     W = { "<cmd>lua require('user.telescope').grep_cursor_string()<cr>", "Live Grep" },
     z = { "<cmd>lua require('user.telescope').search_only_certain_files()<cr>", "Certain Filetype" },
   }
+  lvim.builtin.which_key.mappings["g"]["f"] = {
+    "<cmd>lua require('user.telescope').git_status()<cr>",
+    "Git Status",
+  }
+
   lvim.builtin.which_key.mappings["s"] = {
     name = "Search",
     b = { "<cmd>Telescope git_branches<cr>", "Checkout branch" },

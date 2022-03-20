@@ -60,7 +60,7 @@ M.config = function()
     -- },
     -- show_end_of_line = false,
     show_trailing_blankline_indent = false,
-    show_first_indent_level = true,
+    show_first_indent_level = false,
     space_char_blankline = " ",
     use_treesitter = true,
     show_foldtext = false,

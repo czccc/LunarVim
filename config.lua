@@ -2,8 +2,8 @@
 lvim.leader = "space"
 -- lvim.format_on_save = false
 lvim.format_on_save = true
-lvim.colorscheme = "tokyonight"
--- lvim.colorscheme = "onedarker"
+-- lvim.colorscheme = "tokyonight"
+lvim.colorscheme = "onedarker"
 require("user.options").config()
 
 lvim.log.level = "warn"

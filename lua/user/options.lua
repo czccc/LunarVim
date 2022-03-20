@@ -27,6 +27,7 @@ M.config = function()
 
   vim.opt.number = true
   vim.opt.relativenumber = false
+  vim.opt.autochdir = false
   vim.opt.wrap = true
   vim.opt.termguicolors = true
   vim.opt.updatetime = 100

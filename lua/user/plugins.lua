@@ -308,6 +308,30 @@ M.config = function()
       end,
       ft = { "c", "cpp", "objc", "objcpp" },
     },
+    -- {
+    --   "natecraddock/workspaces.nvim",
+    --   config = function()
+    --     require("workspaces").setup {
+    --       hooks = {
+    --         open = {
+    --           "NvimTreeOpen",
+    --           "SessionsLoad",
+    --         },
+    --       },
+    --     }
+    --   end,
+    --   requires = {
+    --     {
+    --       "natecraddock/sessions.nvim",
+    --       config = function()
+    --         require("sessions").setup {
+    --           events = { "BufEnter" },
+    --           session_filepath = ".nvim/session",
+    --         }
+    --       end,
+    --     },
+    --   },
+    -- },
   }
 end
 
